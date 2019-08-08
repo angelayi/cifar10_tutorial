@@ -10,6 +10,8 @@ import torch.nn.functional as F
 
 from CNN import Net
 
+start_time = time.time()
+
 # transform torchvision datasets from [0, 1] to of normalized range [-1, 1].
 
 transform = transforms.Compose(
@@ -40,7 +42,6 @@ optimizer = optim.SGD(net.parameters(), lr=0.001, momentum=0.9)
 
 # train the network
 
-start_time = time.time()
 for epoch in range(4):  # loop over the dataset multiple times
 
     running_loss = 0.0
@@ -63,9 +64,6 @@ for epoch in range(4):  # loop over the dataset multiple times
             print('[%d, %5d] loss: %.3f' %
                   (epoch + 1, i + 1, running_loss / 2000))
             running_loss = 0.0
-
-elapsed_time = time.time() - start_time
-print('Finished Training. time={:.2f}s'.format(elapsed_time))
 
 # test the network on test data
 
@@ -127,3 +125,6 @@ with torch.no_grad():
 for i in range(10):
     print('Accuracy of %5s : %2d %%' % (
         classes[i], 100 * class_correct[i] / class_total[i]))
+
+elapsed_time = time.time() - start_time
+print('Finished Training. time={:.2f}s'.format(elapsed_time))
